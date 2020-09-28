@@ -1,6 +1,21 @@
 import * as dotenv from 'dotenv'
 
-dotenv.config()
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = 'development'
+}
+
+function configFile() {
+  switch (process.env.NODE_ENV) {
+    case 'development':
+      return '.env'
+    case 'test':
+      return '.env.example'
+    default:
+      throw new Error('Unknown NODE_ENV')
+  }
+}
+
+dotenv.config({ path: configFile() })
 
 interface Environment {
   databaseUrl: string
