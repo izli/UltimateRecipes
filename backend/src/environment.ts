@@ -1,3 +1,7 @@
+import * as dotenv from 'dotenv'
+
+dotenv.config()
+
 interface Environment {
   databaseUrl: string
 }
@@ -14,6 +18,6 @@ function requireEnv(key: string): string {
   if (env) {
     return env
   } else {
-    throw new Error('Environment variable ${env} not configured')
+    throw new Error(`Environment variable ${key} not configured`)
   }
 }
