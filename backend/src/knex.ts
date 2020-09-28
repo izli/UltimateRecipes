@@ -20,4 +20,6 @@ function connect(): Knex {
   return Knex(config)
 }
 
+// jeejee tosi kiva
+
 export default connect()
