@@ -1,5 +1,10 @@
 import * as dotenv from 'dotenv'
 
+export enum NodeEnv {
+  development = 'development',
+  test = 'test'
+}
+
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development'
 }
@@ -20,11 +25,13 @@ dotenv.config({ path: configFile() })
 interface Environment {
   databaseUrl: string
   port: number
+  nodeEnv: NodeEnv
 }
 
 const environment: Environment = {
   databaseUrl: requireEnv('DATABASE_URL'),
-  port: parseInt(process.env.PORT || '3000')
+  port: port(),
+  nodeEnv: process.env.NODE_ENV as NodeEnv
 }
 
 function requireEnv(key: string): string {
@@ -34,6 +41,17 @@ function requireEnv(key: string): string {
     return env
   } else {
     throw new Error(`Environment variable ${key} not configured`)
+  }
+}
+
+/**
+ * Return different por in tests
+ */
+function port() {
+  if (process.env.NODE_ENV === NodeEnv.test) {
+    return 10000 + parseInt(process.env.JEST_WORKER_ID)
+  } else {
+    return parseInt(process.env.PORT || '3000')
   }
 }
 
