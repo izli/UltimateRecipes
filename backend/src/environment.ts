@@ -10,8 +10,6 @@ const environment: Environment = {
   databaseUrl: requireEnv('DATABASE_URL')
 }
 
-export default environment
-
 function requireEnv(key: string): string {
   const env = process.env[key]
 
@@ -21,3 +19,5 @@ function requireEnv(key: string): string {
     throw new Error(`Environment variable ${key} not configured`)
   }
 }
+
+export default environment
