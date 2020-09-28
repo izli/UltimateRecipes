@@ -20,7 +20,7 @@ export async function insert(user: UserBeforeSaving): Promise<string> {
 }
 
 export async function find(id: string): Promise<User> {
-  return pool.one<User>(sql`
+  return pool.maybeOne<User>(sql`
     SELECT *
     FROM users
     WHERE
