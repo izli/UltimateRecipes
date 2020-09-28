@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    image: 'postgres:12.2'
+    container_name: ultimate_recipes_db
+    command: ["postgres", "-c", "log_statement=all"]
+    environment:
+      - POSTGRES_USER=ultimate_recipes
+      - POSTGRES_DB=ultimate_recipes_test
+      - POSTGRES_PASSWORD=ultimate_recipes_pass
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
