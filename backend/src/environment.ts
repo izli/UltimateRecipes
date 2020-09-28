@@ -4,10 +4,12 @@ dotenv.config()
 
 interface Environment {
   databaseUrl: string
+  port: number
 }
 
 const environment: Environment = {
-  databaseUrl: requireEnv('DATABASE_URL')
+  databaseUrl: requireEnv('DATABASE_URL'),
+  port: parseInt(process.env.PORT || '3000')
 }
 
 function requireEnv(key: string): string {

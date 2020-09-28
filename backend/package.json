@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "ts-node -T ./src/server.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "migrate:create": "knex --knexfile ./knexfile.js migrate:make -x ts --stub migrations/template.ts.stub",
