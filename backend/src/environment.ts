@@ -45,7 +45,7 @@ function requireEnv(key: string): string {
 }
 
 /**
- * Return different por in tests
+ * Return different port in tests
  */
 function port() {
   if (process.env.NODE_ENV === NodeEnv.test) {
