@@ -1,4 +1,4 @@
-import * as express from 'express'
+import express from 'express'
 import { urlencoded, json } from 'body-parser'
 import environment, { NodeEnv } from './environment'
 
