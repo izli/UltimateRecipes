@@ -1,4 +1,4 @@
-import * as request from 'supertest'
+import request from 'supertest'
 import { app } from '../server'
 
 import * as User from '../db/User'
