@@ -2,7 +2,7 @@ import { sql } from 'slonik'
 import pool from '../slonik'
 
 export interface RecipeBeforeSaving {
-  name: string,
+  name: string
   time: number
 }
 
@@ -13,7 +13,7 @@ export interface Recipe extends RecipeBeforeSaving {
 export async function insert(recipe: RecipeBeforeSaving): Promise<string> {
   return pool.oneFirst(sql`
     INSERT INTO
-      users(name)
+      recipes(name, time)
     VALUES
       (${recipe.name}, ${recipe.time})
     RETURNING id
