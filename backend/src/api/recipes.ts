@@ -16,7 +16,6 @@ routes.get('/recipes/:id', async (req, res) => {
 
 routes.get('/recipes', async (req, res) => {
   const recipes = await Recipe.select()
-
   if (recipes) {
     return res.json(recipes)
   } else {
