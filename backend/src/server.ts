@@ -5,6 +5,7 @@ import environment, { NodeEnv } from './environment'
 import indexRoutes from './api/index'
 import userRoutes from './api/users'
 import recipeRoutes from './api/recipes'
+import cookieSession from 'cookie-session'
 
 export const app = express()
 const cors = require('cors')
@@ -12,6 +13,12 @@ const cors = require('cors')
 app.use(urlencoded({ extended: false }))
 app.use(json())
 app.use(cors())
+app.use(
+  cookieSession({
+    name: 'session',
+    keys: ['randomstring1']
+  })
+)
 
 app.use('/', indexRoutes)
 app.use('/', userRoutes)

@@ -27,3 +27,12 @@ export async function find(id: string): Promise<User | null> {
       id = ${id}
   `)
 }
+
+export async function findByName(name: string): Promise<User> {
+  return pool.maybeOne<User>(sql`
+    SELECT *
+    FROM users
+    WHERE
+      name = ${name}
+  `)
+}
