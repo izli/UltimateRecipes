@@ -49,7 +49,7 @@ function requireEnv(key: string): string {
  */
 function port() {
   if (process.env.NODE_ENV === NodeEnv.test) {
-    return 10000 + parseInt(process.env.JEST_WORKER_ID)
+    return 10000 + parseInt(process.env.JEST_WORKER_ID || '0')
   } else {
     return parseInt(process.env.PORT || '3000')
   }

@@ -7,7 +7,7 @@ describe('User', () => {
     })
 
     const user = await User.find(userId)
-    expect(user.id).not.toBeUndefined()
-    expect(user.name).toEqual('Manny Calavera')
+    expect(user!.id).not.toBeUndefined()
+    expect(user!.name).toEqual('Manny Calavera')
   })
 })

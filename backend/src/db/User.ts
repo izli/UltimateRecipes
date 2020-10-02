@@ -19,11 +19,20 @@ export async function insert(user: UserBeforeSaving): Promise<string> {
   `) as Promise<string>
 }
 
-export async function find(id: string): Promise<User> {
+export async function find(id: string): Promise<User | null> {
   return pool.maybeOne<User>(sql`
     SELECT *
     FROM users
     WHERE
       id = ${id}
+  `)
+}
+
+export async function findByName(name: string): Promise<User> {
+  return pool.maybeOne<User>(sql`
+    SELECT *
+    FROM users
+    WHERE
+      name = ${name}
   `)
 }
