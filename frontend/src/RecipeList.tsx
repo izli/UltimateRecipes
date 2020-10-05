@@ -7,6 +7,7 @@ import {
   Theme,
   CardMedia,
   Typography,
+  CardActionArea,
 } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
@@ -21,20 +22,36 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     root: {
       width: 600,
+      height: 150,
       display: "flex",
+      background: "white",
+      transition: "0.3s",
+      boxShadow: "0 3px 5px 2px rgba(63, 81, 181, .3)",
+      border: "1px solid lightgrey",
+      "&:hover": {
+        background: "#edeffa",
+      },
     },
     cardStyleDetails: {
       display: "flex",
       flexDirection: "column",
     },
     media: {
-      width: 151,
-      height: 151,
+      width: 150,
+      height: 150,
+      position: "absolute",
+      marginTop: -4,
+    },
+    cardBody: {
+      marginLeft: 160,
+    },
+    preview: {
+      marginLeft: 15,
     },
     cardFooter: {
       textAlign: "center",
-      marginTop: 50,
-      marginLeft: 300,
+      marginLeft: 200,
+      marginTop: 10,
     },
   })
 );
@@ -53,18 +70,27 @@ export const RecipeList: React.FC<Props> = ({ recipes }) => {
         >
           <Grid item xs={12}>
             <Card className={classes.root}>
-              <CardMedia
-                className={classes.media}
-                image="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/italian-meatballs-329-horizontal-2-1545406095.jpg"
-              />
-              <div>
-                <CardHeader title={recipe.name} />
-                <div className={classes.cardFooter}>
-                  <Typography variant="body2">
-                    Time: {recipe.time} min
-                  </Typography>
+              {/* todo in CardActionArea define routing to recipe */}
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/italian-meatballs-329-horizontal-2-1545406095.jpg"
+                />
+                <div className={classes.cardBody}>
+                  <CardHeader title={recipe.name} />
+                  <div className={classes.preview}>
+                    <Typography>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry...
+                    </Typography>
+                  </div>
+                  <div className={classes.cardFooter}>
+                    <Typography variant="body2">
+                      Time: {recipe.time} min
+                    </Typography>
+                  </div>
                 </div>
-              </div>
+              </CardActionArea>
             </Card>
           </Grid>
         </Grid>
