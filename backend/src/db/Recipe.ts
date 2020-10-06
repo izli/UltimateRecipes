@@ -20,7 +20,7 @@ export async function insert(recipe: RecipeBeforeSaving): Promise<string> {
   `) as Promise<string>
 }
 
-export async function find(id: string): Promise<Recipe> {
+export async function find(id: string): Promise<Recipe | null> {
   return pool.maybeOne<Recipe>(sql`
     SELECT *
     FROM recipes
@@ -30,7 +30,7 @@ export async function find(id: string): Promise<Recipe> {
 }
 
 export async function select(): Promise<Recipe[]> {
-  return pool.many<Recipe>(sql`
+  return pool.any<Recipe>(sql`
     SELECT *
     FROM recipes
   `)
