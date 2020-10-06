@@ -8,7 +8,7 @@ describe('Recipe', () => {
     })
 
     const recipe = await Recipe.find(recipeID)
-    expect(recipe.id).not.toBeUndefined()
-    expect(recipe.name).toEqual('Puuro')
+    expect(recipe!.id).not.toBeUndefined()
+    expect(recipe!.name).toEqual('Puuro')
   })
 })
