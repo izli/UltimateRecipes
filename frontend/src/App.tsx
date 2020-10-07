@@ -38,7 +38,7 @@ function App() {
 
   return (
     <div>
-      <CreateHeader setUser={setUser} />
+      <CreateHeader setUser={setUser} user={user} />
       {user && (
         <>
           <div className={myStyles.mainContent}>
@@ -46,6 +46,13 @@ function App() {
           </div>
           <div>
             <RecipeList recipes={recipes} />
+          </div>
+        </>
+      )}
+      {!user && (
+        <>
+          <div className={myStyles.mainContent}>
+            Please log in to see the recipes
           </div>
         </>
       )}
