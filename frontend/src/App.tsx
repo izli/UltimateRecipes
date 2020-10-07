@@ -5,6 +5,14 @@ import { CreateHeader } from "./Header";
 import { SearchRecipe } from "./SearchRecipe";
 import { GetAllRecipes } from "./APIClient";
 import { RecipeList } from "./RecipeList";
+import { AddRecipeForm } from "./AddRecipeForm";
+import {
+  useHistory,
+  Switch,
+  Route,
+  BrowserRouter as Router,
+} from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 const createStyles = makeStyles(() => ({
   mainContent: {
@@ -18,6 +26,8 @@ let initialRecipes: Recipe[] = [];
 
 function App() {
   const myStyles = createStyles();
+
+  const history = useHistory();
 
   const [isLoading, setLoading] = useState(true);
   const [recipes, setRecipes] = useState(initialRecipes);
@@ -34,11 +44,26 @@ function App() {
     return <div>Loading recipes</div>;
   }
 
+  const addRecipe: AddRecipe = (name: string, time: number) => {
+    const newRecipe = { name, time };
+    console.log(newRecipe);
+    setRecipes([...recipes, newRecipe]);
+  };
+
   return (
     <div>
       <CreateHeader />
       <div className={myStyles.mainContent}>
         <SearchRecipe />
+      </div>
+      <div className={myStyles.mainContent}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => history.push("/addRecipe")}
+        >
+          Add New Recipe
+        </Button>
       </div>
       <div>
         <RecipeList recipes={recipes} />
