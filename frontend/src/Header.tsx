@@ -19,7 +19,7 @@ const createStyles = makeStyles(() => ({
   },
   loginFields: {
     marginLeft: "auto",
-    marginRight: "1em",
+    marginRight: "1.5em",
     marginTop: "1em",
     display: "flex",
   },
@@ -37,6 +37,7 @@ const createStyles = makeStyles(() => ({
 
 type Props = {
   setUser: React.Dispatch<React.SetStateAction<null | User>>;
+  user: User | null;
 };
 
 export function CreateHeader(props: Props) {
@@ -52,26 +53,31 @@ export function CreateHeader(props: Props) {
       <Typography variant="h1" className={myStyles.headerH1}>
         Ultimate recipes
       </Typography>
-      <div className={myStyles.loginFields}>
-        <div className={myStyles.flexDisplay}>
-          <TextField
-            label="Enter your username"
-            className={myStyles.inputField}
-            onChange={(event) => setTextValue(event.target.value)}
-            value={textValue}
-          ></TextField>
+      {!props.user && (
+        <div className={myStyles.loginFields}>
+          <div className={myStyles.flexDisplay}>
+            <TextField
+              label="Enter your username"
+              className={myStyles.inputField}
+              onChange={(event) => setTextValue(event.target.value)}
+              value={textValue}
+            ></TextField>
+          </div>
+          <div className={myStyles.flexDisplay}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={myStyles.loginButton}
+              onClick={() => setUsername(textValue)}
+            >
+              Log in
+            </Button>
+          </div>
         </div>
-        <div className={myStyles.flexDisplay}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={myStyles.loginButton}
-            onClick={() => setUsername(textValue)}
-          >
-            Log in
-          </Button>
-        </div>
-      </div>
+      )}
+      {props.user && (
+        <div className={myStyles.loginFields}>Hello {props.user.name}!</div>
+      )}
     </div>
   );
 }
