@@ -5,6 +5,7 @@ import { CreateHeader } from "./Header";
 import { SearchRecipe } from "./SearchRecipe";
 import { GetAllRecipes } from "./APIClient";
 import { RecipeList } from "./RecipeList";
+import { User } from "./models/user";
 
 const createStyles = makeStyles(() => ({
   mainContent: {
@@ -21,6 +22,7 @@ function App() {
 
   const [isLoading, setLoading] = useState(true);
   const [recipes, setRecipes] = useState(initialRecipes);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     GetAllRecipes().then((data) => {
@@ -28,7 +30,7 @@ function App() {
       setRecipes(initialRecipes);
       setLoading(false);
     });
-  });
+  }, [isLoading]);
 
   if (isLoading) {
     return <div>Loading recipes</div>;
@@ -36,13 +38,17 @@ function App() {
 
   return (
     <div>
-      <CreateHeader />
-      <div className={myStyles.mainContent}>
-        <SearchRecipe />
-      </div>
-      <div>
-        <RecipeList recipes={recipes} />
-      </div>
+      <CreateHeader setUser={setUser} />
+      {user && (
+        <>
+          <div className={myStyles.mainContent}>
+            <SearchRecipe />
+          </div>
+          <div>
+            <RecipeList recipes={recipes} />
+          </div>
+        </>
+      )}
     </div>
   );
 }

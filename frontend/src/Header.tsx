@@ -1,8 +1,10 @@
-import React from "react";
+import { GetUser } from "./APIClient";
+import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { User } from "./models/user";
 
 const createStyles = makeStyles(() => ({
   headerStyle: {
@@ -33,8 +35,18 @@ const createStyles = makeStyles(() => ({
   },
 }));
 
-export function CreateHeader() {
+type Props = {
+  setUser: React.Dispatch<React.SetStateAction<null | User>>;
+};
+
+export function CreateHeader(props: Props) {
   const myStyles = createStyles();
+  const [textValue, setTextValue] = useState("");
+  const [username, setUsername] = useState("");
+  const userData = useLoginUser(username);
+  props.setUser(userData);
+  console.log(userData);
+
   return (
     <div className={myStyles.headerStyle}>
       <Typography variant="h1" className={myStyles.headerH1}>
@@ -45,6 +57,8 @@ export function CreateHeader() {
           <TextField
             label="Enter your username"
             className={myStyles.inputField}
+            onChange={(event) => setTextValue(event.target.value)}
+            value={textValue}
           ></TextField>
         </div>
         <div className={myStyles.flexDisplay}>
@@ -52,6 +66,7 @@ export function CreateHeader() {
             variant="contained"
             color="primary"
             className={myStyles.loginButton}
+            onClick={() => setUsername(textValue)}
           >
             Log in
           </Button>
@@ -59,4 +74,14 @@ export function CreateHeader() {
       </div>
     </div>
   );
+}
+
+export function useLoginUser(username: String) {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    if (username.length > 0) {
+      GetUser(username, setUser);
+    }
+  }, [username]);
+  return user;
 }
