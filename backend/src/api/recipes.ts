@@ -23,4 +23,13 @@ routes.get('/recipes', async (req, res) => {
   }
 })
 
+routes.post('/recipes/', async (req, res) => {
+  const recipe = await Recipe.insert(req.body)
+  if (recipe) {
+    return res.json(recipe)
+  } else {
+    return res.status(404).json({ message: "couldn't add recipe" })
+  }
+})
+
 export default routes
