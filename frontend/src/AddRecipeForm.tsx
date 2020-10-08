@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import useRecipeForm from "./CustomHooks";
+import { SendRecipe } from "./APIClient";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,12 +31,42 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  addRecipe: AddRecipe;
+  addRecipe: (name: string, time: number) => void;
 }
+
+const defaultRecipe = { name: "", time: 0 };
+
+const useRecipeForm = () => {
+  const [details, setDetails] = useState<Details>(defaultRecipe);
+
+  const handleSubmit = (event: React.FormEvent) => {
+    if (event) {
+      event.preventDefault();
+      SendRecipe(details);
+      setDetails(defaultRecipe);
+    }
+  };
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    event.persist();
+    setDetails((details) => ({
+      ...details,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  return {
+    handleSubmit,
+    handleInputChange,
+    details,
+  };
+};
 
 export const AddRecipeForm: React.FC<Props> = ({ addRecipe }) => {
   const classes = useStyles();
-  //const [details, handleInputChange, handleSubmit] = useRecipeForm();
+  const { details, handleInputChange, handleSubmit } = useRecipeForm();
 
   return (
     <div className={classes.bodyStyle}>
@@ -53,8 +83,8 @@ export const AddRecipeForm: React.FC<Props> = ({ addRecipe }) => {
             name="name"
             required
             label="Name of the dish"
-            // onChange={handleInputChange}
-            //   value={details.name}
+            onChange={handleInputChange}
+            value={details.name}
           />
           {"  "}
           <TextField
@@ -62,13 +92,13 @@ export const AddRecipeForm: React.FC<Props> = ({ addRecipe }) => {
             name="time"
             required
             label="Cooking time"
-            // value={details.time}
-            //onChange={handleInputChange}
+            value={details.time}
+            onChange={handleInputChange}
           />
         </Grid>
-        {/* <Button variant="contained" color="primary" onSubmit={handleSubmit}>
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
           Add
-        </Button> */}
+        </Button>
       </Grid>
     </div>
   );
