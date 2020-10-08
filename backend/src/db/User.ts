@@ -28,7 +28,7 @@ export async function find(id: string): Promise<User | null> {
   `)
 }
 
-export async function findByName(name: string): Promise<User> {
+export async function findByName(name: string): Promise<User | null> {
   return pool.maybeOne<User>(sql`
     SELECT *
     FROM users
