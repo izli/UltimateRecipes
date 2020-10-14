@@ -1,5 +1,7 @@
 import React from "react";
 import Axios from "axios";
+import { setupMaster } from "cluster";
+import { User } from "./models/user";
 
 const api = "http://localhost:3000/";
 
@@ -9,7 +11,7 @@ export async function GetAllRecipes() {
 
 export function GetUser(
   username: String,
-  setUser: React.Dispatch<React.SetStateAction<null>>
+  setUser: (user: User | null) => void
 ) {
   fetch(`http://localhost:3000/users/login`, {
     method: "POST",
@@ -20,4 +22,13 @@ export function GetUser(
     .then((userData) => {
       setUser(userData);
     });
+}
+
+export function LogOutUser(setUser: (user: User | null) => void) {
+  fetch(`http://localhost:3000/users/logout`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  }).then(() => {
+    setUser(null);
+  });
 }
