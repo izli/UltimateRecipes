@@ -1,6 +1,7 @@
 import { Router } from 'express'
 
 import * as User from '../db/User'
+import { request } from 'http'
 
 const routes = Router()
 
@@ -22,6 +23,11 @@ routes.post('/users/login', async (req, res) => {
   } else {
     return res.status(404).json({ message: "no such user, can't login" })
   }
+})
+
+routes.post('/users/logout', async (req, res) => {
+  req.session!.userId = ''
+  return { userId: '', name: '' }
 })
 
 export default routes

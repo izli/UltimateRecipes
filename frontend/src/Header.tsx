@@ -1,4 +1,4 @@
-import { GetUser } from "./APIClient";
+import { GetUser, LogOutUser } from "./APIClient";
 import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -36,7 +36,7 @@ const createStyles = makeStyles(() => ({
 }));
 
 type Props = {
-  setUser: React.Dispatch<React.SetStateAction<null | User>>;
+  setUser: (user: User | null) => void;
   user: User | null;
 };
 
@@ -44,9 +44,8 @@ export function CreateHeader(props: Props) {
   const myStyles = createStyles();
   const [textValue, setTextValue] = useState("");
   const [username, setUsername] = useState("");
-  const userData = useLoginUser(username);
-  props.setUser(userData);
-  console.log(userData);
+  GetOrLogoutUser(username, props.setUser);
+  console.log(props.user);
 
   return (
     <div className={myStyles.headerStyle}>
@@ -76,18 +75,37 @@ export function CreateHeader(props: Props) {
         </div>
       )}
       {props.user && (
-        <div className={myStyles.loginFields}>Hello {props.user.name}!</div>
+        <div className={myStyles.loginFields}>
+          <div>Hello {props.user.name}!</div>
+          <div className={myStyles.flexDisplay}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={myStyles.loginButton}
+              onClick={() => {
+                setUsername("");
+                setTextValue("");
+              }}
+            >
+              Log out
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );
 }
 
-export function useLoginUser(username: String) {
-  const [user, setUser] = useState(null);
+export function GetOrLogoutUser(
+  username: String,
+  setUser: (user: User | null) => void
+) {
+  // const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
-    if (username.length > 0) {
+    if (username != "") {
       GetUser(username, setUser);
+    } else {
+      LogOutUser(setUser);
     }
   }, [username]);
-  return user;
 }
