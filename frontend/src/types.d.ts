@@ -3,4 +3,4 @@ interface Recipe {
   time: number;
 }
 
-type AddRecipe = (name: string, time: number) => void;
+type Details = { name: string; time: number };

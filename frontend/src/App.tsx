@@ -5,13 +5,7 @@ import { CreateHeader } from "./Header";
 import { SearchRecipe } from "./SearchRecipe";
 import { GetAllRecipes } from "./APIClient";
 import { RecipeList } from "./RecipeList";
-import { AddRecipeForm } from "./AddRecipeForm";
-import {
-  useHistory,
-  Switch,
-  Route,
-  BrowserRouter as Router,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { User } from "./models/user";
 
@@ -45,12 +39,6 @@ function App() {
   if (isLoading) {
     return <div>Loading recipes</div>;
   }
-
-  const addRecipe: AddRecipe = (name: string, time: number) => {
-    const newRecipe = { name, time };
-    console.log(newRecipe);
-    setRecipes([...recipes, newRecipe]);
-  };
 
   return (
     <div>
