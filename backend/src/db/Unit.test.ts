@@ -8,7 +8,6 @@ describe('Unit', () => {
     })
 
     const unit = await Unit.find(unitID)
-    console.log(unit)
     expect(unit!.id).not.toBeUndefined()
     expect(unit!.unit_name).toEqual('gramma')
   })
