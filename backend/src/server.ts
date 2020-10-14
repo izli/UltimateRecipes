@@ -5,6 +5,7 @@ import environment, { NodeEnv } from './environment'
 import indexRoutes from './api/index'
 import userRoutes from './api/users'
 import recipeRoutes from './api/recipes'
+import unitRoutes from './api/units'
 import cookieSession from 'cookie-session'
 
 export const app = express()
@@ -23,6 +24,7 @@ app.use(
 app.use('/', indexRoutes)
 app.use('/', userRoutes)
 app.use('/', recipeRoutes)
+app.use('/', unitRoutes)
 
 export const server = app.listen(environment.port, () => {
   if (environment.nodeEnv !== NodeEnv.test) {
