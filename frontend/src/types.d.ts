@@ -1,6 +1,6 @@
 interface Recipe {
-  name: string;
+  headline: string;
   time: number;
 }
 
-type Details = { name: string; time: number };
+type Details = { headline: string; time: number };

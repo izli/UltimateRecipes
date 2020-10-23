@@ -77,7 +77,7 @@ export const RecipeList: React.FC<Props> = ({ recipes }) => {
                   image="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/italian-meatballs-329-horizontal-2-1545406095.jpg"
                 />
                 <div className={classes.cardBody}>
-                  <CardHeader title={recipe.name} />
+                  <CardHeader title={recipe.headline} />
                   <div className={classes.preview}>
                     <Typography>
                       Lorem Ipsum is simply dummy text of the printing and

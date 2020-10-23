@@ -11,7 +11,7 @@ export async function GetAllRecipes() {
 
 export function SendRecipe(recipeBody: Details) {
   Axios.post(api + "recipes", {
-    name: recipeBody.name,
+    name: recipeBody.headline,
     time: recipeBody.time,
   }).then((response) => {
     console.log(response);
