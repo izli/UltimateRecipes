@@ -24,7 +24,7 @@ routes.get('/recipes', async (req, res) => {
 })
 
 routes.post('/recipes/', async (req, res) => {
-  const recipe = await Recipe.insert(req.body)
+  const recipe = await Recipe.addRecipe(req.body.recipe, req.body.ingredients)
   if (recipe) {
     return res.json(recipe)
   } else {

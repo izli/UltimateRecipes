@@ -31,10 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  addRecipe: (name: string, time: number) => void;
+  addRecipe: (headline: string, time: number) => void;
 }
 
-const defaultRecipe = { name: "", time: 0 };
+const defaultRecipe = { headline: "", time: 0 };
 
 const useRecipeForm = () => {
   const [details, setDetails] = useState<Details>(defaultRecipe);
@@ -84,7 +84,7 @@ export const AddRecipeForm: React.FC<Props> = ({ addRecipe }) => {
             required
             label="Name of the dish"
             onChange={handleInputChange}
-            value={details.name}
+            value={details.headline}
           />
           {"  "}
           <TextField

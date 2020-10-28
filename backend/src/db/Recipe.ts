@@ -2,8 +2,10 @@ import { sql } from 'slonik'
 import pool from '../slonik'
 
 export interface RecipeBeforeSaving {
-  name: string
+  headline: string
   time: number
+  instructions: string
+  image: string
 }
 
 export interface Recipe extends RecipeBeforeSaving {
@@ -13,9 +15,9 @@ export interface Recipe extends RecipeBeforeSaving {
 export async function insert(recipe: RecipeBeforeSaving): Promise<string> {
   return pool.oneFirst(sql`
     INSERT INTO
-      recipes(name, time)
+      recipes(headline, time, instructions, image)
     VALUES
-      (${recipe.name}, ${recipe.time})
+      (${recipe.headline}, ${recipe.time}, ${recipe.instructions}, ${recipe.image})
     RETURNING id
   `) as Promise<string>
 }
@@ -34,4 +36,23 @@ export async function select(): Promise<Recipe[]> {
     SELECT *
     FROM recipes
   `)
+}
+
+export async function addRecipe(
+  recipe: RecipeBeforeSaving,
+  ingredients: { ingredient_id: string; quantity: string; unit_id: string }[]
+) {
+  const recipe_id = await insert(recipe)
+
+  await Promise.all(
+    ingredients.map(ingredient => {
+      return pool.many(sql`
+      INSERT INTO
+        recipe_ingredients(quantity, unit_id, recipe_id, ingredients_id)
+      VALUES
+        (${ingredient.quantity}, ${ingredient.unit_id}, ${recipe_id}, ${ingredient.ingredient_id})
+    `)
+    })
+  )
+  return recipe_id
 }
